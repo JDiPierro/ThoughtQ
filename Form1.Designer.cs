@@ -99,6 +99,7 @@
             this.Controls.Add(this.thoughtEntry);
             this.MinimumSize = new System.Drawing.Size(294, 397);
             this.Name = "Form1";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thought Q";
             this.Load += new System.EventHandler(this.Form1_Load);

@@ -23,31 +23,6 @@ namespace ThoughtQ
             thoughts = new List<Thought>();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            thoughtEntry.Text = FormConstants.defEnterText;
-        }
-
-        private void thoughtEntry_Enter(object sender, EventArgs e)
-        {
-            if (thoughtEntry.Text == FormConstants.defEnterText)
-                thoughtEntry.Text = String.Empty;
-        }
-
-        private void thoughtEntry_Leave(object sender, EventArgs e)
-        {
-            if (thoughtEntry.Text == "")
-                thoughtEntry.Text = FormConstants.defEnterText;
-        }
-
-        private void thoughtEntry_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && thoughtEntry.Text != "")
-            {
-                AddThought();
-            }
-        }
-
         private void AddThought()
         {
             Thought newThought = new Thought(thoughtEntry.Text);
@@ -77,10 +52,35 @@ namespace ThoughtQ
             foreach (ListViewItem item in selected)
             {
                 Thought found = thoughts.Find(i => i.getTitle() == item.Text);
-                ThoughtInfo tInfo = new ThoughtInfo(found,thoughts);
+                ThoughtInfo tInfo = new ThoughtInfo(found, thoughts);
                 tInfo.ShowDialog();
             }
             updateList();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            thoughtEntry.Text = FormConstants.defEnterText;
+        }
+
+        private void thoughtEntry_Enter(object sender, EventArgs e)
+        {
+            if (thoughtEntry.Text == FormConstants.defEnterText)
+                thoughtEntry.Text = String.Empty;
+        }
+
+        private void thoughtEntry_Leave(object sender, EventArgs e)
+        {
+            if (thoughtEntry.Text == "")
+                thoughtEntry.Text = FormConstants.defEnterText;
+        }
+
+        private void thoughtEntry_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && thoughtEntry.Text != "")
+            {
+                AddThought();
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
