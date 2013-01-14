@@ -15,8 +15,9 @@ namespace ThoughtQ
     {
         Thought displayed;
         List<Thought> allThoughts;
+        MainWindow mainForm;
 
-        public ThoughtInfo(Thought inThought, List<Thought> inThoughtList)
+        public ThoughtInfo(ref Thought inThought, ref List<Thought> inThoughtList, MainWindow mainForm)
         {
             InitializeComponent();
 
@@ -26,12 +27,15 @@ namespace ThoughtQ
             txt_Title.Text = displayed.getTitle();
             txt_Description.Text = displayed.getDescription();
             txt_Created.Text = displayed.getTimeCreated().ToShortTimeString();
+            this.mainForm = mainForm;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
             displayed.setDescription(txt_Description.Text);
             displayed.setTitle(txt_Title.Text);
+            mainForm.updateActiveList();
+            mainForm.updateArchiveList();
             this.Close();
         }
 
@@ -43,6 +47,8 @@ namespace ThoughtQ
         private void btnDelete_Click(object sender, EventArgs e)
         {
             allThoughts.Remove(displayed);
+            mainForm.updateActiveList();
+            mainForm.updateArchiveList();
             this.Close();
         }
     }

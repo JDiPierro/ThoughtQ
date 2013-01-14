@@ -66,7 +66,7 @@
             this.txt_Description.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_Description.Location = new System.Drawing.Point(15, 86);
+            this.txt_Description.Location = new System.Drawing.Point(12, 86);
             this.txt_Description.Multiline = true;
             this.txt_Description.Name = "txt_Description";
             this.txt_Description.Size = new System.Drawing.Size(375, 198);
@@ -87,7 +87,7 @@
             // btn_save
             // 
             this.btn_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_save.Location = new System.Drawing.Point(425, 189);
+            this.btn_save.Location = new System.Drawing.Point(428, 261);
             this.btn_save.Name = "btn_save";
             this.btn_save.Size = new System.Drawing.Size(62, 23);
             this.btn_save.TabIndex = 4;
@@ -98,7 +98,7 @@
             // btn_cancel
             // 
             this.btn_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_cancel.Location = new System.Drawing.Point(425, 218);
+            this.btn_cancel.Location = new System.Drawing.Point(428, 232);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(62, 23);
             this.btn_cancel.TabIndex = 5;
@@ -109,7 +109,7 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(425, 261);
+            this.btnDelete.Location = new System.Drawing.Point(425, 112);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(62, 23);
             this.btnDelete.TabIndex = 6;
@@ -153,7 +153,7 @@
             this.MinimumSize = new System.Drawing.Size(515, 334);
             this.Name = "ThoughtInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ThoughtInfo";
+            this.Text = "Thought Info";
             this.ResumeLayout(false);
             this.PerformLayout();
 
