@@ -89,6 +89,9 @@ namespace ThoughtQ
             thoughtList.Items.Add(newEntry);
 
             thoughtEntry.Text = String.Empty;
+
+            if (tabControl1.SelectedTab.Name != "tb_Active")
+                tabControl1.SelectTab("tb_Active");
             //Serializer.SerializeToXML(thoughts);
         }
 
