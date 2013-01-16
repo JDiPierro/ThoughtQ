@@ -92,7 +92,20 @@ namespace ThoughtQ
 
             if (tabControl1.SelectedTab.Name != "tb_Active")
                 tabControl1.SelectTab("tb_Active");
+            updateList();
             //Serializer.SerializeToXML(thoughts);
+        }
+
+        public void updateList()
+        {
+            if (tabControl1.SelectedTab.Name == "tb_Archive")
+            {
+                updateArchiveList();
+            }
+            else
+            {
+                updateActiveList();
+            }
         }
 
         public void updateActiveList()
@@ -127,14 +140,7 @@ namespace ThoughtQ
 
         private void tabControl1_TabIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedTab.Name == "tp_Archive")
-            {
-                updateActiveList();
-            }
-            else
-            {
-                updateArchiveList();
-            }
+            updateList();
         }
 
     }
