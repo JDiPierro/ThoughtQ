@@ -40,8 +40,8 @@ namespace ThoughtQ
             var selected = thoughtList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                Thought found = thoughts.Find(i => i.getTitle() == item.Text);
-                ThoughtInfo tInfo = new ThoughtInfo(ref found, ref thoughts, this);
+                Thought found = queue.thoughts.Find(i => i.getTitle() == item.Text);
+                ThoughtInfo tInfo = new ThoughtInfo(ref found, ref queue, this);
                 tInfo.Show();
             }
         }

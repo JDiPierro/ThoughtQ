@@ -3,16 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace ThoughtQ.Data
 {
     [Serializable]
-    public class Thought
+    public class Thought : ISerializable
     {
         private String Title;
         private String Description;
-        DateTime created;
+        private DateTime created;
+
+        #region SERIALIZATION
+
+        public Thought(SerializationInfo info, StreamingContext context)
+        {
+            Title = (String)info.GetValue("Title", typeof(String));
+            Description = (String)info.GetValue("Description", typeof(String));
+            created = (DateTime)info.GetValue("created", typeof(DateTime));
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Title", Title);
+            info.AddValue("Description", Description);
+            info.AddValue("created", created);
+        }
+
+        #endregion
 
         public Thought()
         {

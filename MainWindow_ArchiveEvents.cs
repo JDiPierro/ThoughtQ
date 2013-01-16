@@ -28,8 +28,8 @@ namespace ThoughtQ
             var selected = archiveList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                Thought found = archive.Find(i => i.getTitle() == item.Text);
-                ThoughtInfo tInfo = new ThoughtInfo(ref found, ref archive, this);
+                Thought found = queue.archive.Find(i => i.getTitle() == item.Text);
+                ThoughtInfo tInfo = new ThoughtInfo(ref found, ref queue, this);
                 tInfo.Show();
             }
         }

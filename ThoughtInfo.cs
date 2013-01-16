@@ -14,15 +14,15 @@ namespace ThoughtQ
     public partial class ThoughtInfo : Form
     {
         Thought displayed;
-        List<Thought> allThoughts;
+        tQueue queue;
         MainWindow mainForm;
 
-        public ThoughtInfo(ref Thought inThought, ref List<Thought> inThoughtList, MainWindow mainForm)
+        public ThoughtInfo(ref Thought inThought, ref tQueue inThoughtList, MainWindow mainForm)
         {
             InitializeComponent();
 
             displayed = inThought;
-            allThoughts = inThoughtList;
+            queue = inThoughtList;
 
             txt_Title.Text = displayed.getTitle();
             txt_Description.Text = displayed.getDescription();
@@ -34,8 +34,7 @@ namespace ThoughtQ
         {
             displayed.setDescription(txt_Description.Text);
             displayed.setTitle(txt_Title.Text);
-            mainForm.updateActiveList();
-            mainForm.updateArchiveList();
+            mainForm.updateList();
             this.Close();
         }
 
@@ -46,9 +45,8 @@ namespace ThoughtQ
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            allThoughts.Remove(displayed);
-            mainForm.updateActiveList();
-            mainForm.updateArchiveList();
+            queue.thoughts.Remove(displayed);
+            mainForm.updateList();
             this.Close();
         }
     }

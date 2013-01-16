@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Data\Serializer.cs" />
     <Compile Include="Data\Thought.cs" />
+    <Compile Include="Data\tQueue.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +54,9 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="FormFiles\FormConstants.cs" />
+    <Compile Include="MainWindow_DB.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow_ThoughtListEvents.cs">
       <SubType>Form</SubType>
     </Compile>
