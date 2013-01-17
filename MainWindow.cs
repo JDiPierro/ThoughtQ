@@ -22,6 +22,11 @@ namespace ThoughtQ
             loadQueue();
             if(queue == null)
                 queue = new tQueue();
+
+            if (!System.IO.Directory.Exists(Serializer.defaultFilePath))
+            {
+                System.IO.Directory.CreateDirectory(Serializer.defaultFilePath);
+            }
             
         }
 
@@ -122,7 +127,7 @@ namespace ThoughtQ
                 updateActiveList();
             }
 
-            String filename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Thoughts\\thoughts.tq";
+            String filename = Serializer.defaultFilePath + "\\thoughts.tq";
             Serializer.Serialize(filename, queue);
         }
 
