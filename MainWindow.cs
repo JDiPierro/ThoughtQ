@@ -71,6 +71,7 @@ namespace ThoughtQ
             {
                 Thought found = queue.thoughts.Find(i => (i.getTitle() == item.Text));
                 //Console.Out.WriteLine("Found: {0}", found.getTitle());
+                found.tState = thought_state.archived;
                 if (found != null)
                 {
                     queue.archive.Add(found);
@@ -89,6 +90,7 @@ namespace ThoughtQ
             {
                 Thought found = queue.archive.Find(i => (i.getTitle() == item.Text));
                 //Console.Out.WriteLine("Found: {0}", found.getTitle());
+                found.tState = thought_state.active;
                 if (found != null)
                 {
                     queue.thoughts.Add(found);
@@ -134,22 +136,28 @@ namespace ThoughtQ
         public void updateActiveList()
         {
             thoughtList.Items.Clear();
-            foreach (Thought t in queue.thoughts)
+            if (queue.thoughts.Count > 0)
             {
-                ListViewItem newEntry = new ListViewItem(t.getTitle());
-                newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
-                thoughtList.Items.Add(newEntry);
+                foreach (Thought t in queue.thoughts)
+                {
+                    ListViewItem newEntry = new ListViewItem(t.getTitle());
+                    newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
+                    thoughtList.Items.Add(newEntry);
+                }
             }
         }
 
         public void updateArchiveList()
         {
             archiveList.Items.Clear();
-            foreach (Thought t in queue.archive)
+            if (queue.archive.Count > 0)
             {
-                ListViewItem newEntry = new ListViewItem(t.getTitle());
-                newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
-                archiveList.Items.Add(newEntry);
+                foreach (Thought t in queue.archive)
+                {
+                    ListViewItem newEntry = new ListViewItem(t.getTitle());
+                    newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
+                    archiveList.Items.Add(newEntry);
+                }
             }
         }
 

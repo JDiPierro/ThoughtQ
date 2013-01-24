@@ -28,6 +28,11 @@ namespace ThoughtQ
             txt_Description.Text = displayed.getDescription();
             txt_Created.Text = displayed.getTimeCreated().ToShortTimeString();
             this.mainForm = mainForm;
+
+            if (inThought.tState == thought_state.archived)
+            {
+                btnArchive.Enabled = false;
+            }
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -45,7 +50,19 @@ namespace ThoughtQ
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if(displayed.tState == thought_state.active)
+                queue.thoughts.Remove(displayed);
+            else
+                queue.archive.Remove(displayed);
+            mainForm.updateList();
+            this.Close();
+        }
+
+        private void btnArchive_Click(object sender, EventArgs e)
+        {
             queue.thoughts.Remove(displayed);
+            queue.archive.Add(displayed);
+            displayed.tState = thought_state.archived;
             mainForm.updateList();
             this.Close();
         }

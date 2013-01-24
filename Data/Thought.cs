@@ -7,12 +7,19 @@ using System.Runtime.Serialization;
 
 namespace ThoughtQ.Data
 {
+    public enum thought_state
+    {
+        active,
+        archived
+    }
+
     [Serializable]
     public class Thought : ISerializable
     {
         private String Title;
         private String Description;
         private DateTime created;
+        public thought_state tState;
 
         #region SERIALIZATION
 
@@ -21,6 +28,8 @@ namespace ThoughtQ.Data
             Title = (String)info.GetValue("Title", typeof(String));
             Description = (String)info.GetValue("Description", typeof(String));
             created = (DateTime)info.GetValue("created", typeof(DateTime));
+            tState = (thought_state)info.GetValue("tState", typeof(thought_state));
+            
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -28,6 +37,7 @@ namespace ThoughtQ.Data
             info.AddValue("Title", Title);
             info.AddValue("Description", Description);
             info.AddValue("created", created);
+            info.AddValue("tState", tState);
         }
 
         #endregion
@@ -37,6 +47,7 @@ namespace ThoughtQ.Data
             Title = "Empty Thought";
             Description = String.Empty;
             created = DateTime.Now;
+            tState = thought_state.active;
         }
 
         public Thought(String inTitle, String inDescription = "")
@@ -44,6 +55,7 @@ namespace ThoughtQ.Data
             Title = inTitle;
             Description = inDescription;
             created = DateTime.Now;
+            tState = thought_state.active;
         }
 
         public void setTitle(String inTitle)

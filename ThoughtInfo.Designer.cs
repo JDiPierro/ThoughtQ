@@ -37,16 +37,17 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.txt_Created = new System.Windows.Forms.TextBox();
             this.label_created = new System.Windows.Forms.Label();
+            this.btnArchive = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txt_Title
             // 
             this.txt_Title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_Title.Location = new System.Drawing.Point(15, 25);
+            this.txt_Title.Location = new System.Drawing.Point(12, 25);
             this.txt_Title.Multiline = true;
             this.txt_Title.Name = "txt_Title";
-            this.txt_Title.Size = new System.Drawing.Size(472, 42);
+            this.txt_Title.Size = new System.Drawing.Size(478, 42);
             this.txt_Title.TabIndex = 0;
             // 
             // label_Title
@@ -109,7 +110,7 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(425, 112);
+            this.btnDelete.Location = new System.Drawing.Point(428, 141);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(62, 23);
             this.btnDelete.TabIndex = 6;
@@ -136,11 +137,23 @@
             this.label_created.TabIndex = 8;
             this.label_created.Text = "Created";
             // 
+            // btnArchive
+            // 
+            this.btnArchive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnArchive.Location = new System.Drawing.Point(428, 112);
+            this.btnArchive.Name = "btnArchive";
+            this.btnArchive.Size = new System.Drawing.Size(62, 23);
+            this.btnArchive.TabIndex = 9;
+            this.btnArchive.Text = "Archive";
+            this.btnArchive.UseVisualStyleBackColor = true;
+            this.btnArchive.Click += new System.EventHandler(this.btnArchive_Click);
+            // 
             // ThoughtInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 296);
+            this.Controls.Add(this.btnArchive);
             this.Controls.Add(this.label_created);
             this.Controls.Add(this.txt_Created);
             this.Controls.Add(this.btnDelete);
@@ -170,5 +183,6 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.TextBox txt_Created;
         private System.Windows.Forms.Label label_created;
+        private System.Windows.Forms.Button btnArchive;
     }
 }
