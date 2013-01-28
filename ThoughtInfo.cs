@@ -27,6 +27,11 @@ namespace ThoughtQ
             txt_Title.Text = displayed.getTitle();
             txt_Description.Text = displayed.getDescription();
             txt_Created.Text = displayed.getTimeCreated().ToShortTimeString();
+            cbx_cat.Text = displayed.getCategory();
+            foreach (String el in inThoughtList.categories)
+            {
+                cbx_cat.Items.Add(el);
+            }
             this.mainForm = mainForm;
 
             if (inThought.tState == thought_state.archived)
@@ -39,6 +44,13 @@ namespace ThoughtQ
         {
             displayed.setDescription(txt_Description.Text);
             displayed.setTitle(txt_Title.Text);
+            displayed.setCategory(cbx_cat.Text);
+
+            if(!queue.categories.Contains(cbx_cat.Text))
+            {
+                queue.categories.Add(cbx_cat.Text);
+            }
+
             mainForm.updateList();
             this.Close();
         }

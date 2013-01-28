@@ -38,6 +38,8 @@
             this.txt_Created = new System.Windows.Forms.TextBox();
             this.label_created = new System.Windows.Forms.Label();
             this.btnArchive = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbx_cat = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // txt_Title
@@ -110,7 +112,7 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(428, 141);
+            this.btnDelete.Location = new System.Drawing.Point(428, 183);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(62, 23);
             this.btnDelete.TabIndex = 6;
@@ -140,7 +142,7 @@
             // btnArchive
             // 
             this.btnArchive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnArchive.Location = new System.Drawing.Point(428, 112);
+            this.btnArchive.Location = new System.Drawing.Point(428, 154);
             this.btnArchive.Name = "btnArchive";
             this.btnArchive.Size = new System.Drawing.Size(62, 23);
             this.btnArchive.TabIndex = 9;
@@ -148,11 +150,31 @@
             this.btnArchive.UseVisualStyleBackColor = true;
             this.btnArchive.Click += new System.EventHandler(this.btnArchive_Click);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(396, 109);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Category";
+            // 
+            // cbx_cat
+            // 
+            this.cbx_cat.FormattingEnabled = true;
+            this.cbx_cat.Location = new System.Drawing.Point(399, 126);
+            this.cbx_cat.Name = "cbx_cat";
+            this.cbx_cat.Size = new System.Drawing.Size(91, 21);
+            this.cbx_cat.TabIndex = 11;
+            // 
             // ThoughtInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 296);
+            this.Controls.Add(this.cbx_cat);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnArchive);
             this.Controls.Add(this.label_created);
             this.Controls.Add(this.txt_Created);
@@ -184,5 +206,7 @@
         private System.Windows.Forms.TextBox txt_Created;
         private System.Windows.Forms.Label label_created;
         private System.Windows.Forms.Button btnArchive;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbx_cat;
     }
 }

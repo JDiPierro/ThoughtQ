@@ -16,6 +16,8 @@ namespace ThoughtQ
     {
         private tQueue queue;
 
+        public static String AllCats = "All Categories";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,12 +29,15 @@ namespace ThoughtQ
             {
                 System.IO.Directory.CreateDirectory(Serializer.defaultFilePath);
             }
-            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             thoughtEntry.Text = FormConstants.defEnterText;
+
+            cbx_cats.Items.Add(AllCats);
+            cbx_cats.SelectedIndex = 0;
+            //updateList();
         }
 
         private void loadQueue()
@@ -44,7 +49,21 @@ namespace ThoughtQ
                 {
                     //Yes: Load the day
                     queue = Serializer.DeSerialize(fp);
-                    updateList();
+
+                    foreach (Thought t in queue.thoughts)
+                    {
+                        if (!queue.categories.Contains(t.getCategory()))
+                        {
+                            queue.categories.Add(t.getCategory());
+                        }
+                    }
+                    foreach (Thought t in queue.archive)
+                    {
+                        if (!queue.categories.Contains(t.getCategory()))
+                        {
+                            queue.categories.Add(t.getCategory());
+                        }
+                    }
                 }
             }
         }
@@ -122,41 +141,44 @@ namespace ThoughtQ
         {
             if (tabControl1.SelectedTab.Name == "tb_Archive")
             {
-                updateArchiveList();
+                updateList(queue.archive, thought_state.archived);
             }
             else
             {
-                updateActiveList();
+                updateList(queue.thoughts, thought_state.active);
             }
 
             String filename = Serializer.defaultFilePath + "\\thoughts.tq";
             Serializer.Serialize(filename, queue);
         }
 
-        public void updateActiveList()
+        public void updateList(List<Thought> inThoughts,thought_state state)
         {
-            thoughtList.Items.Clear();
+            ListView view;
+            if (state == thought_state.active)
+            {
+                view = thoughtList;
+            }
+            else
+            {
+                view = archiveList;
+            }
+
+            view.Items.Clear();
             if (queue.thoughts.Count > 0)
             {
-                foreach (Thought t in queue.thoughts)
+                foreach (Thought t in inThoughts)
                 {
-                    ListViewItem newEntry = new ListViewItem(t.getTitle());
-                    newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
-                    thoughtList.Items.Add(newEntry);
-                }
-            }
-        }
-
-        public void updateArchiveList()
-        {
-            archiveList.Items.Clear();
-            if (queue.archive.Count > 0)
-            {
-                foreach (Thought t in queue.archive)
-                {
-                    ListViewItem newEntry = new ListViewItem(t.getTitle());
-                    newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
-                    archiveList.Items.Add(newEntry);
+                    if(!cbx_cats.Items.Contains(t.getCategory()))
+                    {
+                        cbx_cats.Items.Add(t.getCategory());
+                    }
+                    if (cbx_cats.SelectedItem.Equals(AllCats) || cbx_cats.SelectedItem.Equals(t.getCategory()))
+                    {
+                        ListViewItem newEntry = new ListViewItem(t.getTitle());
+                        newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
+                        view.Items.Add(newEntry);
+                    }
                 }
             }
         }
@@ -174,5 +196,9 @@ namespace ThoughtQ
             updateList();
         }
 
+        private void cbx_cats_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateList();
+        }
     }
 }

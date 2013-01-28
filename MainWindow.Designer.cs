@@ -45,6 +45,7 @@
             this.DeleteFromArchive = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbx_cats = new System.Windows.Forms.ComboBox();
             this.ArchiveItem.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tb_Active.SuspendLayout();
@@ -81,7 +82,7 @@
             this.thoughtList.Location = new System.Drawing.Point(0, 0);
             this.thoughtList.MultiSelect = false;
             this.thoughtList.Name = "thoughtList";
-            this.thoughtList.Size = new System.Drawing.Size(246, 283);
+            this.thoughtList.Size = new System.Drawing.Size(246, 270);
             this.thoughtList.TabIndex = 1;
             this.thoughtList.UseCompatibleStateImageBehavior = false;
             this.thoughtList.View = System.Windows.Forms.View.Details;
@@ -107,7 +108,7 @@
             // archiveToolStripMenuItem
             // 
             this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
-            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.archiveToolStripMenuItem.Text = "Archive";
             this.archiveToolStripMenuItem.Click += new System.EventHandler(this.archiveToolStripMenuItem_Click);
             // 
@@ -129,10 +130,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tb_Active);
             this.tabControl1.Controls.Add(this.tb_Archive);
-            this.tabControl1.Location = new System.Drawing.Point(12, 38);
+            this.tabControl1.Location = new System.Drawing.Point(12, 51);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(254, 309);
+            this.tabControl1.Size = new System.Drawing.Size(254, 296);
             this.tabControl1.TabIndex = 3;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_TabIndexChanged);
             // 
@@ -142,7 +143,7 @@
             this.tb_Active.Location = new System.Drawing.Point(4, 22);
             this.tb_Active.Name = "tb_Active";
             this.tb_Active.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_Active.Size = new System.Drawing.Size(246, 283);
+            this.tb_Active.Size = new System.Drawing.Size(246, 270);
             this.tb_Active.TabIndex = 0;
             this.tb_Active.Text = "Thoughts";
             this.tb_Active.UseVisualStyleBackColor = true;
@@ -153,7 +154,7 @@
             this.tb_Archive.Location = new System.Drawing.Point(4, 22);
             this.tb_Archive.Name = "tb_Archive";
             this.tb_Archive.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_Archive.Size = new System.Drawing.Size(246, 283);
+            this.tb_Archive.Size = new System.Drawing.Size(246, 270);
             this.tb_Archive.TabIndex = 1;
             this.tb_Archive.Text = "Archive";
             this.tb_Archive.UseVisualStyleBackColor = true;
@@ -196,32 +197,42 @@
             this.deleteToolStripMenuItem,
             this.restoreToolStripMenuItem});
             this.DeleteFromArchive.Name = "DeleteFromArchive";
-            this.DeleteFromArchive.Size = new System.Drawing.Size(153, 70);
+            this.DeleteFromArchive.Size = new System.Drawing.Size(114, 48);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // restoreToolStripMenuItem
             // 
             this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.restoreToolStripMenuItem.Text = "Restore";
             this.restoreToolStripMenuItem.Click += new System.EventHandler(this.restoreToolStripMenuItem_Click);
             // 
-            // Form1
+            // cbx_cats
+            // 
+            this.cbx_cats.FormattingEnabled = true;
+            this.cbx_cats.Location = new System.Drawing.Point(145, 38);
+            this.cbx_cats.Name = "cbx_cats";
+            this.cbx_cats.Size = new System.Drawing.Size(121, 21);
+            this.cbx_cats.TabIndex = 4;
+            this.cbx_cats.SelectedIndexChanged += new System.EventHandler(this.cbx_cats_SelectedIndexChanged);
+            // 
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(278, 359);
+            this.Controls.Add(this.cbx_cats);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.thoughtEntry);
             this.MinimumSize = new System.Drawing.Size(294, 397);
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thought Q";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -253,6 +264,7 @@
         private System.Windows.Forms.ContextMenuStrip ArchiveItem;
         private System.Windows.Forms.ToolStripMenuItem archiveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cbx_cats;
     }
 }
 

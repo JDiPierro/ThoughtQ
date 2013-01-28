@@ -12,11 +12,13 @@ namespace ThoughtQ.Data
     {
         public List<Thought> thoughts;
         public List<Thought> archive;
+        public List<String> categories;
 
         public tQueue()
         {
             thoughts = new List<Thought>();
             archive = new List<Thought>();
+            categories = new List<String>(); 
         }
 
         #region SERIALIZATION
@@ -25,12 +27,21 @@ namespace ThoughtQ.Data
         {
             thoughts = (List<Thought>)info.GetValue("thoughts", typeof(List<Thought>));
             archive = (List<Thought>)info.GetValue("archive", typeof(List<Thought>));
+            try
+            {
+                categories = (List<String>)info.GetValue("categories", typeof(List<String>));
+            }
+            catch (SerializationException e)
+            {
+                categories = new List<String>();
+            }
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("thoughts", thoughts);
             info.AddValue("archive", archive);
+            info.AddValue("categories", categories);
         }
 
         #endregion
