@@ -177,7 +177,14 @@ namespace ThoughtQ
                     if (cbx_cats.SelectedItem.Equals(AllCats) || cbx_cats.SelectedItem.Equals(t.getCategory()))
                     {
                         ListViewItem newEntry = new ListViewItem(t.getTitle());
-                        newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
+                        if (t.getTimeCreated().Date < DateTime.Now.Date)
+                        {
+                            newEntry.SubItems.Add(t.getTimeCreated().Month + "/" + t.getTimeCreated().Day);
+                        }
+                        else
+                        {
+                            newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
+                        }
                         view.Items.Add(newEntry);
                     }
                 }

@@ -92,11 +92,12 @@
             // Thought
             // 
             this.Thought.Text = "Thought";
-            this.Thought.Width = 182;
+            this.Thought.Width = 184;
             // 
             // Created
             // 
             this.Created.Text = "Created";
+            this.Created.Width = 57;
             // 
             // ArchiveItem
             // 
