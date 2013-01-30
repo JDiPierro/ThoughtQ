@@ -29,15 +29,29 @@ namespace ThoughtQ.Data
         //Constructor used when deserializing data.
         public Thought(SerializationInfo info, StreamingContext context)
         {
-            Title = (String)info.GetValue("Title", typeof(String));
+            try
+            {
+                Title = (String)info.GetValue("Title", typeof(String));
+            }
+            catch (SerializationException e)
+            {
+                Title = "Corrupted Thought";
+            }
             Description = (String)info.GetValue("Description", typeof(String));
             created = (DateTime)info.GetValue("created", typeof(DateTime));
-            tState = (thought_state)info.GetValue("tState", typeof(thought_state));
+            try
+            {
+                tState = (thought_state)info.GetValue("tState", typeof(thought_state));
+            }
+            catch (SerializationException e)
+            {
+                tState = thought_state.active;
+            }
             try
             {
                 Category = (String)info.GetValue("Category", typeof(String));
             }
-            catch (SerializationException e)
+            catch(SerializationException e)
             {
                 Category = unCat;
             }

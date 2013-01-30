@@ -35,6 +35,14 @@ namespace ThoughtQ
             }
         }
 
+        private void thoughtList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && archiveList.SelectedItems.Count > 0)
+            {
+                ArchiveThought();
+            }
+        }
+
         private void thoughtList_DoubleClick(object sender, EventArgs e)
         {
             var selected = thoughtList.SelectedItems;

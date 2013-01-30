@@ -57,6 +57,7 @@ namespace ThoughtQ
                             queue.categories.Add(t.getCategory());
                         }
                     }
+
                     foreach (Thought t in queue.archive)
                     {
                         if (!queue.categories.Contains(t.getCategory()))

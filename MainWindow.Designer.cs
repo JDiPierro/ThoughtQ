@@ -87,7 +87,7 @@
             this.thoughtList.UseCompatibleStateImageBehavior = false;
             this.thoughtList.View = System.Windows.Forms.View.Details;
             this.thoughtList.DoubleClick += new System.EventHandler(this.thoughtList_DoubleClick);
-            this.thoughtList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.thoughtEntry_KeyDown);
+            this.thoughtList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.thoughtList_KeyDown);
             // 
             // Thought
             // 
