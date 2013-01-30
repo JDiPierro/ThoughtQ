@@ -51,6 +51,7 @@
             this.txt_Title.Name = "txt_Title";
             this.txt_Title.Size = new System.Drawing.Size(478, 42);
             this.txt_Title.TabIndex = 0;
+            this.txt_Title.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Title_KeyDown);
             // 
             // label_Title
             // 
@@ -74,6 +75,7 @@
             this.txt_Description.Name = "txt_Description";
             this.txt_Description.Size = new System.Drawing.Size(375, 198);
             this.txt_Description.TabIndex = 2;
+            this.txt_Description.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Description_KeyDown);
             // 
             // label_description
             // 

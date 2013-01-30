@@ -78,5 +78,29 @@ namespace ThoughtQ
             mainForm.updateList();
             this.Close();
         }
+
+        private void txt_Description_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control & e.KeyCode == Keys.A)
+            {
+                txt_Description.SelectAll();
+            }
+            else if (e.Control & e.KeyCode == Keys.Back)
+            {
+                SendKeys.SendWait("^+{LEFT}{BACKSPACE}");
+            }
+        }
+
+        private void txt_Title_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control & e.KeyCode == Keys.A)
+            {
+                txt_Title.SelectAll();
+            }
+            else if (e.Control & e.KeyCode == Keys.Back)
+            {
+                SendKeys.SendWait("^+{LEFT}{BACKSPACE}");
+            }
+        }
     }
 }
