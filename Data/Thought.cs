@@ -22,6 +22,7 @@ namespace ThoughtQ.Data
         private String Description;
         private String Category;
         private DateTime created;
+        private DateTime lastUpdated;
         public thought_state tState;
 
         #region SERIALIZATION
@@ -37,8 +38,25 @@ namespace ThoughtQ.Data
             {
                 Title = "Corrupted Thought";
             }
-            Description = (String)info.GetValue("Description", typeof(String));
-            created = (DateTime)info.GetValue("created", typeof(DateTime));
+
+            try
+            {
+                Description = (String)info.GetValue("Description", typeof(String));
+            }
+            catch (SerializationException e)
+            {
+                Description = String.Empty;
+            }
+
+            try
+            {
+                created = (DateTime)info.GetValue("created", typeof(DateTime));
+            }
+            catch (SerializationException e)
+            {
+                created = DateTime.Now;
+            }
+
             try
             {
                 tState = (thought_state)info.GetValue("tState", typeof(thought_state));
@@ -47,6 +65,7 @@ namespace ThoughtQ.Data
             {
                 tState = thought_state.active;
             }
+
             try
             {
                 Category = (String)info.GetValue("Category", typeof(String));
@@ -54,6 +73,15 @@ namespace ThoughtQ.Data
             catch(SerializationException e)
             {
                 Category = unCat;
+            }
+
+            try
+            {
+                lastUpdated = (DateTime)info.GetValue("lastUpdated", typeof(DateTime));
+            }
+            catch (SerializationException e)
+            {
+                lastUpdated = DateTime.Now;
             }
         }
 
@@ -65,6 +93,7 @@ namespace ThoughtQ.Data
             info.AddValue("created", created);
             info.AddValue("tState", tState);
             info.AddValue("Category", Category);
+            info.AddValue("lastUpdated", lastUpdated);
         }
 
         #endregion
@@ -74,6 +103,7 @@ namespace ThoughtQ.Data
             Title = "Empty Thought";
             Description = String.Empty;
             created = DateTime.Now;
+            lastUpdated = DateTime.Now;
             tState = thought_state.active;
             Category = unCat;
         }
@@ -83,6 +113,7 @@ namespace ThoughtQ.Data
             Title = inTitle;
             Description = inDescription;
             created = DateTime.Now;
+            lastUpdated = DateTime.Now;
             tState = thought_state.active;
             Category = inCategory;
         }
@@ -110,6 +141,16 @@ namespace ThoughtQ.Data
         public DateTime getTimeCreated()
         {
             return created;
+        }
+
+        public DateTime getLastUpdate()
+        {
+            return lastUpdated;
+        }
+
+        public void Update()
+        {
+            lastUpdated = DateTime.Now;
         }
 
         public String getCategory()

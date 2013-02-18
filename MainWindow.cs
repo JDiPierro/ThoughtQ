@@ -16,6 +16,8 @@ namespace ThoughtQ
     {
         private tQueue queue;
 
+        List<ThoughtInfo> openThoughts = new List<ThoughtInfo>();
+
         public static String AllCats = "All Categories";
 
         public MainWindow()
@@ -32,7 +34,7 @@ namespace ThoughtQ
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
+        {   
             thoughtEntry.Text = FormConstants.defEnterText;
 
             cbx_cats.Items.Add(AllCats);
@@ -49,21 +51,9 @@ namespace ThoughtQ
                 {
                     //Yes: Load the day
                     queue = Serializer.DeSerialize(fp);
-
-                    foreach (Thought t in queue.thoughts)
+                    if(queue != null)
                     {
-                        if (!queue.categories.Contains(t.getCategory()))
-                        {
-                            queue.categories.Add(t.getCategory());
-                        }
-                    }
-
-                    foreach (Thought t in queue.archive)
-                    {
-                        if (!queue.categories.Contains(t.getCategory()))
-                        {
-                            queue.categories.Add(t.getCategory());
-                        }
+                        queue.loadCategories();
                     }
                 }
             }
@@ -75,9 +65,7 @@ namespace ThoughtQ
             var selected = archiveList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                Thought found = queue.archive.Find(i => (i.getTitle() == item.Text));
-                //Console.Out.WriteLine("Found: {0}", found.getTitle());
-                queue.archive.Remove(found);
+                queue.deleteThought((Thought)item.Tag);
             }
             updateList();
             //Serializer.SerializeToXML(thoughts);
@@ -89,14 +77,7 @@ namespace ThoughtQ
             var selected = thoughtList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                Thought found = queue.thoughts.Find(i => (i.getTitle() == item.Text));
-                //Console.Out.WriteLine("Found: {0}", found.getTitle());
-                found.tState = thought_state.archived;
-                if (found != null)
-                {
-                    queue.archive.Add(found);
-                    queue.thoughts.Remove(found);
-                }
+                queue.archiveThought((Thought)item.Tag);
             }
             updateList();
             //Serializer.SerializeToXML(thoughts);
@@ -104,56 +85,52 @@ namespace ThoughtQ
 
         private void RestoreThought()
         {
-            //Console.Out.WriteLine("Deleting...");
             var selected = archiveList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                Thought found = queue.archive.Find(i => (i.getTitle() == item.Text));
-                //Console.Out.WriteLine("Found: {0}", found.getTitle());
-                found.tState = thought_state.active;
-                if (found != null)
-                {
-                    queue.thoughts.Add(found);
-                    queue.archive.Remove(found);
-                }
+                Thought t = (Thought)item.Tag;
+                queue.RestoreThought((Thought)item.Tag);
             }
             updateList();
-            //Serializer.SerializeToXML(thoughts);
         }
 
         private void AddThought()
         {
-            Thought newThought = new Thought(thoughtEntry.Text);
-            queue.thoughts.Add(newThought);
+            //Get a new thought from the queue
+            Thought newThought = queue.AddThought(thoughtEntry.Text);
 
+            //Create the ListViewItem that will be displayed in the list
             ListViewItem newEntry = new ListViewItem(newThought.getTitle());
             newEntry.SubItems.Add(newThought.getTimeCreated().ToShortTimeString());
+            newEntry.Tag = newThought;
             thoughtList.Items.Add(newEntry);
 
+            //Clear the thoughtEntry field
             thoughtEntry.Text = String.Empty;
 
+            //Select the Active tab after creating a new item.
             if (tabControl1.SelectedTab.Name != "tb_Active")
                 tabControl1.SelectTab("tb_Active");
+            //Update the list view.
             updateList();
-            //Serializer.SerializeToXML(thoughts);
         }
 
         public void updateList()
         {
             if (tabControl1.SelectedTab.Name == "tb_Archive")
             {
-                updateList(queue.archive, thought_state.archived);
+                updateList(queue.getArchive(), thought_state.archived);
             }
             else
             {
-                updateList(queue.thoughts, thought_state.active);
+                updateList(queue.getActive(), thought_state.active);
             }
 
             String filename = Serializer.defaultFilePath + "\\thoughts.tq";
             Serializer.Serialize(filename, queue);
         }
 
-        public void updateList(List<Thought> inThoughts,thought_state state)
+        public void updateList(IReadOnlyCollection<Thought> inThoughts,thought_state state)
         {
             ListView view;
             if (state == thought_state.active)
@@ -166,7 +143,7 @@ namespace ThoughtQ
             }
 
             view.Items.Clear();
-            if (queue.thoughts.Count > 0)
+            if (queue.getActive().Count > 0)
             {
                 foreach (Thought t in inThoughts)
                 {

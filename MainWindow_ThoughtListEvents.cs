@@ -37,7 +37,7 @@ namespace ThoughtQ
 
         private void thoughtList_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete && archiveList.SelectedItems.Count > 0)
+            if ((e.KeyCode == Keys.Delete) && archiveList.SelectedItems.Count > 0)
             {
                 ArchiveThought();
             }
@@ -48,8 +48,12 @@ namespace ThoughtQ
             var selected = thoughtList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                Thought found = queue.thoughts.Find(i => i.getTitle() == item.Text);
+                Thought found = (Thought)item.Tag;
+                
                 ThoughtInfo tInfo = new ThoughtInfo(ref found, ref queue, this);
+
+                openThoughts.Add(tInfo);
+                
                 tInfo.Show();
             }
         }

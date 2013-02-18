@@ -114,7 +114,7 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(428, 183);
+            this.btnDelete.Location = new System.Drawing.Point(428, 203);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(62, 23);
             this.btnDelete.TabIndex = 6;
@@ -144,7 +144,7 @@
             // btnArchive
             // 
             this.btnArchive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnArchive.Location = new System.Drawing.Point(428, 154);
+            this.btnArchive.Location = new System.Drawing.Point(428, 174);
             this.btnArchive.Name = "btnArchive";
             this.btnArchive.Size = new System.Drawing.Size(62, 23);
             this.btnArchive.TabIndex = 9;
@@ -164,6 +164,7 @@
             // 
             // cbx_cat
             // 
+            this.cbx_cat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbx_cat.FormattingEnabled = true;
             this.cbx_cat.Location = new System.Drawing.Point(399, 126);
             this.cbx_cat.Name = "cbx_cat";

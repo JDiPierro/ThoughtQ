@@ -13,9 +13,11 @@ namespace ThoughtQ
 {
     public partial class ThoughtInfo : Form
     {
-        Thought displayed;
-        tQueue queue;
-        MainWindow mainForm;
+        private Thought displayed;
+        
+        /* Object Reference */
+        private tQueue queue;
+        private MainWindow mainForm;
 
         public ThoughtInfo(ref Thought inThought, ref tQueue inThoughtList, MainWindow mainForm)
         {
@@ -38,6 +40,12 @@ namespace ThoughtQ
             {
                 btnArchive.Enabled = false;
             }
+            this.Name = "Thought Info -- " + displayed.getTitle();
+        }
+
+        public Thought getThought()
+        {
+            return displayed;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -63,17 +71,16 @@ namespace ThoughtQ
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if(displayed.tState == thought_state.active)
-                queue.thoughts.Remove(displayed);
+                queue.deleteThought(displayed);
             else
-                queue.archive.Remove(displayed);
+                queue.deleteThought(displayed);
             mainForm.updateList();
             this.Close();
         }
 
         private void btnArchive_Click(object sender, EventArgs e)
         {
-            queue.thoughts.Remove(displayed);
-            queue.archive.Add(displayed);
+            queue.archiveThought(displayed);
             displayed.tState = thought_state.archived;
             mainForm.updateList();
             this.Close();

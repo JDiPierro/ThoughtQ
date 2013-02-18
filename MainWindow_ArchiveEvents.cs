@@ -15,6 +15,8 @@ namespace ThoughtQ
 {
     public partial class MainWindow : Form
     {
+        private List<ThoughtInfo> openWindows;
+
         private void archiveList_KeyDown(object sender, KeyEventArgs e)
         {
             if ((e.KeyCode == Keys.Delete) && archiveList.SelectedItems.Count > 0)
@@ -28,9 +30,19 @@ namespace ThoughtQ
             var selected = archiveList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                Thought found = queue.archive.Find(i => i.getTitle() == item.Text);
-                ThoughtInfo tInfo = new ThoughtInfo(ref found, ref queue, this);
-                tInfo.Show();
+                ThoughtInfo found = openWindows.Find(i => ((Thought)i.Tag == (Thought)item.Tag));
+                if (found != null)
+                {
+                    found.Show();
+                }
+                else
+                {
+                    Thought t = (Thought)item.Tag;
+                    ThoughtInfo tInfo = new ThoughtInfo(ref t, ref queue, this);
+                    tInfo.Tag = t;
+                    openWindows.Add(tInfo);
+                    tInfo.Show();
+                }
             }
         }
 
