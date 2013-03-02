@@ -13,17 +13,19 @@ namespace ThoughtQ
 {
     public partial class ThoughtInfo : Form
     {
+        private ListViewItem item;
         private Thought displayed;
-        
+
         /* Object Reference */
         private tQueue queue;
         private MainWindow mainForm;
 
-        public ThoughtInfo(ref Thought inThought, ref tQueue inThoughtList, MainWindow mainForm)
+        public ThoughtInfo(ref ListViewItem inView, ref tQueue inThoughtList, MainWindow mainForm)
         {
             InitializeComponent();
 
-            displayed = inThought;
+            item = inView;
+            displayed = (Thought)item.Tag;
             queue = inThoughtList;
 
             txt_Title.Text = displayed.getTitle();
@@ -36,11 +38,12 @@ namespace ThoughtQ
             }
             this.mainForm = mainForm;
 
-            if (inThought.tState == thought_state.archived)
+            if (displayed.tState == thought_state.archived)
             {
                 btnArchive.Enabled = false;
             }
-            this.Name = "Thought Info -- " + displayed.getTitle();
+            this.Text = "Thought Info -- " + displayed.getTitle();
+           
         }
 
         public Thought getThought()
@@ -52,14 +55,13 @@ namespace ThoughtQ
         {
             displayed.setDescription(txt_Description.Text);
             displayed.setTitle(txt_Title.Text);
+            item.Text = displayed.getTitle();
             displayed.setCategory(cbx_cat.Text);
 
-            if(!queue.categories.Contains(cbx_cat.Text))
-            {
-                queue.categories.Add(cbx_cat.Text);
-            }
+            mainForm.addCategory(cbx_cat.Text);
+            mainForm.SaveQueue();
 
-            mainForm.updateList();
+            //mainForm.updateList();
             this.Close();
         }
 
@@ -74,7 +76,7 @@ namespace ThoughtQ
                 queue.deleteThought(displayed);
             else
                 queue.deleteThought(displayed);
-            mainForm.updateList();
+            //mainForm.updateList();
             this.Close();
         }
 
@@ -82,7 +84,7 @@ namespace ThoughtQ
         {
             queue.archiveThought(displayed);
             displayed.tState = thought_state.archived;
-            mainForm.updateList();
+            //mainForm.updateList();
             this.Close();
         }
 
@@ -108,6 +110,11 @@ namespace ThoughtQ
             {
                 SendKeys.SendWait("^+{LEFT}{BACKSPACE}");
             }
+        }
+
+        private void ThoughtInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            mainForm.closeWin(this);
         }
     }
 }

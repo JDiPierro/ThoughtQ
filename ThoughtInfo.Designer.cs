@@ -192,6 +192,7 @@
             this.Name = "ThoughtInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Thought Info";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ThoughtInfo_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

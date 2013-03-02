@@ -15,8 +15,11 @@ namespace ThoughtQ
     public partial class MainWindow : Form
     {
         private tQueue queue;
+        private List<ThoughtInfo> openWindows = new List<ThoughtInfo>();
 
         List<ThoughtInfo> openThoughts = new List<ThoughtInfo>();
+        List<ListViewItem> hiddenActive = new List<ListViewItem>();
+        List<ListViewItem> hiddenArchive = new List<ListViewItem>();
 
         public static String AllCats = "All Categories";
 
@@ -34,11 +37,8 @@ namespace ThoughtQ
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {   
+        {
             thoughtEntry.Text = FormConstants.defEnterText;
-
-            cbx_cats.Items.Add(AllCats);
-            cbx_cats.SelectedIndex = 0;
             //updateList();
         }
 
@@ -54,8 +54,58 @@ namespace ThoughtQ
                     if(queue != null)
                     {
                         queue.loadCategories();
+                        foreach (Thought t in queue.getAll())
+                        {
+                            AddThought(t);
+                        }
+
+                        cbx_cats.Items.Add(AllCats);
+                        act_ctxt_cats.DropDownItems.Add(new ToolStripMenuItem(AllCats));
+                        cbx_cats.SelectedIndex = 0;
+
+                        foreach (String str in queue.categories)
+                        {
+                            if (!cbx_cats.Items.Contains(str))
+                                cbx_cats.Items.Add(str);
+                            ToolStripMenuItem catItem = new ToolStripMenuItem(str);
+                            catItem.Click += clickedCategoryContext;
+                            if (!act_ctxt_cats.DropDownItems.Contains(catItem))
+                            {
+                                act_ctxt_cats.DropDownItems.Add(catItem);
+                            }
+                        }
                     }
                 }
+            }
+        }
+
+        private void clickedCategoryContext(object sender, EventArgs e)
+        {
+            ListView list;
+            ToolStripMenuItem inCat = (ToolStripMenuItem)sender;
+            if (tabControl1.SelectedTab.Name.Equals("tb_Active"))
+            {
+                list = thoughtList;
+            }
+            else
+            {
+                list = archiveList;
+            }
+
+            foreach (ListViewItem item in list.SelectedItems)
+            {
+                Thought t = (Thought)item.Tag;
+
+                t.setCategory(inCat.Text);
+            }
+            SaveQueue();
+        }
+
+        public void updateCategories(Thought t)
+        {
+            if (!cbx_cats.Items.Contains(t.getCategory()))
+            {
+                cbx_cats.Items.Add(t.getCategory());
             }
         }
 
@@ -65,10 +115,13 @@ namespace ThoughtQ
             var selected = archiveList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
+                //Delete the Thought
                 queue.deleteThought((Thought)item.Tag);
+                //Delete the ListViewItem associated with that thought.
+                archiveList.Items.Remove(item);
             }
-            updateList();
-            //Serializer.SerializeToXML(thoughts);
+            //updateList();
+            SaveQueue();
         }
 
         private void ArchiveThought()
@@ -78,9 +131,12 @@ namespace ThoughtQ
             foreach (ListViewItem item in selected)
             {
                 queue.archiveThought((Thought)item.Tag);
+                thoughtList.Items.Remove(item);
+                archiveList.Items.Add(item);
             }
-            updateList();
+            //updateList();
             //Serializer.SerializeToXML(thoughts);
+            SaveQueue();
         }
 
         private void RestoreThought()
@@ -90,8 +146,11 @@ namespace ThoughtQ
             {
                 Thought t = (Thought)item.Tag;
                 queue.RestoreThought((Thought)item.Tag);
+                archiveList.Items.Remove(item);
+                thoughtList.Items.Add(item);
             }
-            updateList();
+            //updateList();
+            SaveQueue();
         }
 
         private void AddThought()
@@ -112,60 +171,26 @@ namespace ThoughtQ
             if (tabControl1.SelectedTab.Name != "tb_Active")
                 tabControl1.SelectTab("tb_Active");
             //Update the list view.
-            updateList();
+            //updateList();
+            SaveQueue();
         }
 
-        public void updateList()
+        private void AddThought(Thought t)
         {
-            if (tabControl1.SelectedTab.Name == "tb_Archive")
-            {
-                updateList(queue.getArchive(), thought_state.archived);
-            }
+            
+            //Create the ListViewItem that will be displayed in the list
+            ListViewItem newEntry = new ListViewItem(t.getTitle());
+            newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
+            newEntry.Tag = t;
+
+            if (t.tState == thought_state.active)
+                thoughtList.Items.Add(newEntry);
             else
-            {
-                updateList(queue.getActive(), thought_state.active);
-            }
+                archiveList.Items.Add(newEntry);
 
-            String filename = Serializer.defaultFilePath + "\\thoughts.tq";
-            Serializer.Serialize(filename, queue);
-        }
-
-        public void updateList(IReadOnlyCollection<Thought> inThoughts,thought_state state)
-        {
-            ListView view;
-            if (state == thought_state.active)
-            {
-                view = thoughtList;
-            }
-            else
-            {
-                view = archiveList;
-            }
-
-            view.Items.Clear();
-            if (queue.getActive().Count > 0)
-            {
-                foreach (Thought t in inThoughts)
-                {
-                    if(!cbx_cats.Items.Contains(t.getCategory()))
-                    {
-                        cbx_cats.Items.Add(t.getCategory());
-                    }
-                    if (cbx_cats.SelectedItem.Equals(AllCats) || cbx_cats.SelectedItem.Equals(t.getCategory()))
-                    {
-                        ListViewItem newEntry = new ListViewItem(t.getTitle());
-                        if (t.getTimeCreated().Date < DateTime.Now.Date)
-                        {
-                            newEntry.SubItems.Add(t.getTimeCreated().Month + "/" + t.getTimeCreated().Day);
-                        }
-                        else
-                        {
-                            newEntry.SubItems.Add(t.getTimeCreated().ToShortTimeString());
-                        }
-                        view.Items.Add(newEntry);
-                    }
-                }
-            }
+            //Select the Active tab after creating a new item.
+            if (tabControl1.SelectedTab.Name != "tb_Active")
+                tabControl1.SelectTab("tb_Active");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -178,12 +203,79 @@ namespace ThoughtQ
 
         private void tabControl1_TabIndexChanged(object sender, EventArgs e)
         {
-            updateList();
+            updateListForCategory(tabControl1.SelectedTab.Name);
+        }
+
+        public void addCategory(String cat)
+        {
+            if (!queue.categories.Contains(cat))
+            {
+                queue.categories.Add(cat);
+            }
+
+            if (!cbx_cats.Items.Contains(cat))
+            {
+                cbx_cats.Items.Add(cat);
+            }
+
+            ToolStripMenuItem item = new ToolStripMenuItem(cat);
+            if (!act_ctxt_cats.DropDownItems.Contains(item))
+            {
+                act_ctxt_cats.DropDownItems.Add(item);
+            }
         }
 
         private void cbx_cats_SelectedIndexChanged(object sender, EventArgs e)
         {
-            updateList();
+            updateListForCategory(tabControl1.SelectedTab.Name);
+        }
+
+        private void updateListForCategory(String activeTab)
+        {
+            ListView list;
+            List<ListViewItem> hidden;
+            if (activeTab.Equals("tb_Active"))
+            {
+                list = thoughtList;
+                hidden = hiddenActive;
+            }
+            else
+            {
+                list = archiveList;
+                hidden = hiddenArchive;
+            }
+
+            for(int i = 0 ; i < list.Items.Count; i++)
+            {
+                Thought t = (Thought)list.Items[i].Tag;
+
+                if (!cbx_cats.SelectedItem.Equals(AllCats) && !t.getCategory().Equals(cbx_cats.SelectedItem))
+                {
+                    hidden.Add(list.Items[i]);
+                    list.Items.Remove(list.Items[i]);
+                }
+            }
+
+            for(int i = 0; i < hidden.Count; i++)
+            {
+                Thought t = (Thought)hidden[i].Tag;
+                if (cbx_cats.SelectedItem.Equals(AllCats) || t.getCategory().Equals(cbx_cats.SelectedItem))
+                {
+                    list.Items.Add(hidden[i]);
+                    hidden.Remove(hidden[i]);
+                }
+            }
+        }
+
+        public void SaveQueue()
+        {
+            String filename = Serializer.defaultFilePath + "\\thoughts.tq";
+            Serializer.Serialize(filename, queue);
+        }
+
+        public void closeWin(ThoughtInfo tIn)
+        {
+            openThoughts.Remove(tIn);
         }
     }
 }

@@ -50,11 +50,21 @@ namespace ThoughtQ
             {
                 Thought found = (Thought)item.Tag;
                 
-                ThoughtInfo tInfo = new ThoughtInfo(ref found, ref queue, this);
+                ThoughtInfo t = openThoughts.Find(i => i.Tag == found);
 
-                openThoughts.Add(tInfo);
-                
-                tInfo.Show();
+                if (t == null)
+                {
+                    ListViewItem permItem = item;
+                    ThoughtInfo tInfo = new ThoughtInfo(ref permItem, ref queue, this);
+                    tInfo.Tag = found;
+
+                    openThoughts.Add(tInfo);
+                    tInfo.Show();
+                }
+                else
+                {
+                    t.Focus();
+                }
             }
         }
 

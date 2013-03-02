@@ -33,6 +33,11 @@ namespace ThoughtQ.Data
             return archive.AsReadOnly();
         }
 
+        public IReadOnlyCollection<Thought> getAll()
+        {
+            return allThoughts.AsReadOnly();
+        }
+
         #region SERIALIZATION
 
         public tQueue(SerializationInfo info, StreamingContext context)
@@ -88,6 +93,7 @@ namespace ThoughtQ.Data
         public void archiveThought(Thought t)
         {
             archive.Add(t);
+            t.tState = thought_state.archived;
             thoughts.Remove(t);
         }
 

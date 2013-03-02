@@ -15,7 +15,6 @@ namespace ThoughtQ
 {
     public partial class MainWindow : Form
     {
-        private List<ThoughtInfo> openWindows;
 
         private void archiveList_KeyDown(object sender, KeyEventArgs e)
         {
@@ -30,18 +29,22 @@ namespace ThoughtQ
             var selected = archiveList.SelectedItems;
             foreach (ListViewItem item in selected)
             {
-                ThoughtInfo found = openWindows.Find(i => ((Thought)i.Tag == (Thought)item.Tag));
-                if (found != null)
+                Thought found = (Thought)item.Tag;
+
+                ThoughtInfo t = openThoughts.Find(i => (Thought)i.Tag == found);
+
+                if (t == null)
                 {
-                    found.Show();
+                    ListViewItem permItem = item;
+                    ThoughtInfo tInfo = new ThoughtInfo(ref permItem, ref queue, this);
+                    tInfo.Tag = found;
+
+                    openThoughts.Add(tInfo);
+                    tInfo.Show();
                 }
                 else
                 {
-                    Thought t = (Thought)item.Tag;
-                    ThoughtInfo tInfo = new ThoughtInfo(ref t, ref queue, this);
-                    tInfo.Tag = t;
-                    openWindows.Add(tInfo);
-                    tInfo.Show();
+                    t.Focus();
                 }
             }
         }

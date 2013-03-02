@@ -33,8 +33,9 @@
             this.thoughtList = new System.Windows.Forms.ListView();
             this.Thought = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Created = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ArchiveItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ActiveContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.archiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.act_ctxt_cats = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSave = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tb_Active = new System.Windows.Forms.TabPage();
@@ -42,15 +43,15 @@
             this.archiveList = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DeleteFromArchive = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ArchiveContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cbx_cats = new System.Windows.Forms.ComboBox();
-            this.ArchiveItem.SuspendLayout();
+            this.ActiveContextMenu.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tb_Active.SuspendLayout();
             this.tb_Archive.SuspendLayout();
-            this.DeleteFromArchive.SuspendLayout();
+            this.ArchiveContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // thoughtEntry
@@ -74,7 +75,7 @@
             this.thoughtList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Thought,
             this.Created});
-            this.thoughtList.ContextMenuStrip = this.ArchiveItem;
+            this.thoughtList.ContextMenuStrip = this.ActiveContextMenu;
             this.thoughtList.FullRowSelect = true;
             this.thoughtList.GridLines = true;
             this.thoughtList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -99,19 +100,26 @@
             this.Created.Text = "Created";
             this.Created.Width = 57;
             // 
-            // ArchiveItem
+            // ActiveContextMenu
             // 
-            this.ArchiveItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.archiveToolStripMenuItem});
-            this.ArchiveItem.Name = "ArchiveItem";
-            this.ArchiveItem.Size = new System.Drawing.Size(115, 26);
+            this.ActiveContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.archiveToolStripMenuItem,
+            this.act_ctxt_cats});
+            this.ActiveContextMenu.Name = "ArchiveItem";
+            this.ActiveContextMenu.Size = new System.Drawing.Size(131, 48);
             // 
             // archiveToolStripMenuItem
             // 
             this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
-            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.archiveToolStripMenuItem.Text = "Archive";
             this.archiveToolStripMenuItem.Click += new System.EventHandler(this.archiveToolStripMenuItem_Click);
+            // 
+            // act_ctxt_cats
+            // 
+            this.act_ctxt_cats.Name = "act_ctxt_cats";
+            this.act_ctxt_cats.Size = new System.Drawing.Size(130, 22);
+            this.act_ctxt_cats.Text = "Categories";
             // 
             // btnSave
             // 
@@ -168,7 +176,7 @@
             this.archiveList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.archiveList.ContextMenuStrip = this.DeleteFromArchive;
+            this.archiveList.ContextMenuStrip = this.ArchiveContextMenu;
             this.archiveList.FullRowSelect = true;
             this.archiveList.GridLines = true;
             this.archiveList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -192,13 +200,13 @@
             // 
             this.columnHeader2.Text = "Created";
             // 
-            // DeleteFromArchive
+            // ArchiveContextMenu
             // 
-            this.DeleteFromArchive.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ArchiveContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem,
             this.restoreToolStripMenuItem});
-            this.DeleteFromArchive.Name = "DeleteFromArchive";
-            this.DeleteFromArchive.Size = new System.Drawing.Size(114, 48);
+            this.ArchiveContextMenu.Name = "DeleteFromArchive";
+            this.ArchiveContextMenu.Size = new System.Drawing.Size(114, 48);
             // 
             // deleteToolStripMenuItem
             // 
@@ -237,11 +245,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thought Q";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.ArchiveItem.ResumeLayout(false);
+            this.ActiveContextMenu.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tb_Active.ResumeLayout(false);
             this.tb_Archive.ResumeLayout(false);
-            this.DeleteFromArchive.ResumeLayout(false);
+            this.ArchiveContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -260,12 +268,13 @@
         private System.Windows.Forms.ListView archiveList;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ContextMenuStrip DeleteFromArchive;
+        private System.Windows.Forms.ContextMenuStrip ArchiveContextMenu;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip ArchiveItem;
+        private System.Windows.Forms.ContextMenuStrip ActiveContextMenu;
         private System.Windows.Forms.ToolStripMenuItem archiveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
         private System.Windows.Forms.ComboBox cbx_cats;
+        private System.Windows.Forms.ToolStripMenuItem act_ctxt_cats;
     }
 }
 
